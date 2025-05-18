@@ -1,10 +1,13 @@
-import "./App.css";
+import "./index.css";
 import ChartView from "./ChartView";
 
 function App() {
   return (
-    <div style={{ maxWidth: 800, margin: "auto", padding: 20 }}>
-      <h1>Top History Chart</h1>
+    <div>
+      <div className="flex justify-between p-4">
+        <h1>Top History Chart</h1>
+      </div>
+
       <ChartView />
     </div>
   );
