@@ -3,6 +3,7 @@ import Chart from "chart.js/auto";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
+import { useCountry } from "./CountryContext";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID = 1;
@@ -15,11 +16,14 @@ const url = `https://api.apptica.com/package/top_history/9379/${COUNTRY_ID}?&pla
 export default function TopHistoryChart() {
   const elem = useRef<HTMLCanvasElement>(null);
   const chr = useRef<Chart | null>(null);
+  const { country } = useCountry();
 
   const { data } = useQuery({
     queryKey: ["topHistory"],
     queryFn: async () => {
-      const response = await axios.get(url);
+      const response = await axios.get(
+        `https://api.apptica.com/package/top_history/9379/${country}?&platforms=1&B4NKGg=${API_KEY}`
+      );
       return response.data.data;
     },
   });
