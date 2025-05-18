@@ -1,7 +1,3 @@
-/**
- * Created by DRON D.D on 18.05.2025
- */
-
 import "chartjs-adapter-date-fns";
 import Chart from "chart.js/auto";
 import axios from "axios";
@@ -124,7 +120,7 @@ export default function TopHistoryChart() {
   }, [data]);
 
   return (
-    <div>
+    <div className="h-96">
       <canvas ref={elem} />
     </div>
   );

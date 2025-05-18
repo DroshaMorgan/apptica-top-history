@@ -1,4 +1,4 @@
-import "./App.css";
+import "./index.css";
 import ChartView from "./ChartView";
 
 function App() {
