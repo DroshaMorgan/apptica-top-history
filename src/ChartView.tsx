@@ -6,8 +6,8 @@ import { useEffect, useRef } from "react";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID = 1;
-const DATE_FROM = "2025-05-14";
-const DATE_TO = "2025-05-15";
+// const DATE_FROM = "2025-05-14";
+// const DATE_TO = "2025-05-15";
 
 // const url = `https://api.apptica.com/package/top_history/9379/${COUNTRY_ID}?date_from=${DATE_FROM}&date_to=${DATE_TO}&platforms=1&B4NKGg=${API_KEY}`;
 const url = `https://api.apptica.com/package/top_history/9379/${COUNTRY_ID}?&platforms=1&B4NKGg=${API_KEY}`;
@@ -25,13 +25,7 @@ export default function TopHistoryChart() {
   });
 
   const baseData = useRef({
-    labels: [] as string[],
-    datasets: [] as {
-      label: string;
-      data: number[];
-      borderWidth: number;
-      tension: number;
-    }[],
+    datasets: [],
   });
 
   useEffect(() => {
@@ -62,17 +56,9 @@ export default function TopHistoryChart() {
                 day: "yyyy-MM-dd",
               },
             },
-            title: {
-              display: false,
-              text: "Date",
-            },
           },
           y: {
             reverse: true,
-            title: {
-              display: false,
-              text: "Position",
-            },
           },
         },
       },
@@ -89,10 +75,7 @@ export default function TopHistoryChart() {
     const chart = chr.current;
     if (!chart || !data) return;
 
-    chart.data.labels = [];
     chart.data.datasets = [];
-
-    const labelSet = new Set<string>();
 
     for (const categoryId in data) {
       const category = data[categoryId];
@@ -100,24 +83,22 @@ export default function TopHistoryChart() {
       for (const subCategoryId in category) {
         const entries = category[subCategoryId];
 
-        const dataPoints: { x: string; y: number }[] = [];
+        const dataPoints = [];
 
         for (const date in entries) {
           const position = entries[date];
           dataPoints.push({ x: date, y: position });
-          labelSet.add(date);
         }
 
         chart.data.datasets.push({
           label: `Категория ${categoryId}-${subCategoryId}`,
           data: dataPoints,
           borderWidth: 1,
-          tension: 0.4,
+          tension: 0.5,
         });
       }
     }
 
-    chart.data.labels = Array.from(labelSet).sort();
     chart.update();
   }, [data]);
 
