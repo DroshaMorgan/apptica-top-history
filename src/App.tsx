@@ -4,7 +4,10 @@ import ChartView from "./ChartView";
 function App() {
   return (
     <div>
-      <h1>Top History Chart</h1>
+      <div className="flex justify-between p-4">
+        <h1>Top History Chart</h1>
+      </div>
+
       <ChartView />
     </div>
   );

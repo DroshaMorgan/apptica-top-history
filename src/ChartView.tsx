@@ -4,12 +4,13 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
-const API_KEY = "fVN5Q9KVOlOHDx9mOsKPAQsFBlEhBOwguLkNEDTZvKzJzT3l";
+const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID = 1;
 const DATE_FROM = "2025-05-14";
 const DATE_TO = "2025-05-15";
 
-const url = `https://api.apptica.com/package/top_history/9379/${COUNTRY_ID}?date_from=${DATE_FROM}&date_to=${DATE_TO}&platforms=1&B4NKGg=${API_KEY}`;
+// const url = `https://api.apptica.com/package/top_history/9379/${COUNTRY_ID}?date_from=${DATE_FROM}&date_to=${DATE_TO}&platforms=1&B4NKGg=${API_KEY}`;
+const url = `https://api.apptica.com/package/top_history/9379/${COUNTRY_ID}?&platforms=1&B4NKGg=${API_KEY}`;
 
 export default function TopHistoryChart() {
   const elem = useRef<HTMLCanvasElement>(null);
@@ -47,7 +48,8 @@ export default function TopHistoryChart() {
         },
         plugins: {
           legend: {
-            onClick: () => null,
+            position: "bottom",
+            align: "start",
           },
         },
         scales: {
