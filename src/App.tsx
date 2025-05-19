@@ -21,7 +21,7 @@ function App() {
   return (
     <CountryProvider countries={data}>
       <div className="flex justify-between items-center p-4">
-        <h1>Top History</h1>
+        <h1 className="text-2xl">Top History</h1>
 
         <CountrySelector />
       </div>
