@@ -1,6 +1,7 @@
-import { memo, use, useEffect, type ChangeEvent } from "react";
+import { memo, use, useEffect } from "react";
 import { type Country } from "./CountryContextWrapper";
 import { CountryContext } from "./CountryContext";
+import { Select } from "antd";
 
 const COUNTRY_ID_DEFAULT = 1;
 
@@ -20,26 +21,26 @@ const CountrySelector = memo(() => {
     }
   }, [selectedCountry, countries, setSelectedCountry]);
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selected = findCountryById(countries, Number(e.target.value));
+  const handleChange = (value: number) => {
+    const selected = findCountryById(countries, value);
     if (selected) setSelectedCountry(selected);
   };
 
   return (
-    <div className="flex gap-2 items-center">
-      <label>Select country</label>
-      <select
-        className="p-2 border rounded"
-        value={selectedCountry?.id}
-        onChange={handleChange}
-      >
-        {countries?.map((country: Country) => (
-          <option key={country.id} value={country.id}>
-            {country.name}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Select
+      style={{ minWidth: 200 }}
+      value={selectedCountry?.id}
+      onChange={handleChange}
+      options={countries?.map((country) => ({
+        value: country.id,
+        label: (
+          <span className="flex items-center gap-x-2">
+            <img src={country.icon} alt={country.name} className="w-5 h-5" />
+            <span>{country.country}</span>
+          </span>
+        ),
+      }))}
+    />
   );
 });
 

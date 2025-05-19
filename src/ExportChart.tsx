@@ -36,7 +36,6 @@ const ExportChart = memo<{ chr: RefObject<Chart | null> }>(({ chr }) => {
 
   return (
     <div className="flex gap-2 justify-end">
-      <span>Download:</span>
       <button
         onClick={handleDownloadPNG}
         className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
