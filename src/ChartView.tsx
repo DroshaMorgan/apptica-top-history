@@ -6,7 +6,6 @@ import { use, useEffect, useMemo, useRef } from "react";
 import { CountryContext } from "./CountryContext";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
-const COUNTRY_ID_DEFAULT = 1;
 // const DATE_FROM = "2025-05-14";
 // const DATE_TO = "2025-05-15";
 
@@ -18,15 +17,15 @@ export default function TopHistoryChart() {
   const {selectedCountry} = use(CountryContext);
   console.log(selectedCountry)
 
-  const url = useMemo(()=> `https://api.apptica.com/package/top_history/9379/${selectedCountry?.id ?? COUNTRY_ID_DEFAULT}?&platforms=1&B4NKGg=${API_KEY}`,[selectedCountry]) 
+  const url = useMemo(()=> `https://api.apptica.com/package/top_history/9379/${selectedCountry?.id}?&platforms=1&B4NKGg=${API_KEY}`,[selectedCountry]) 
   
   const { data } = useQuery({
-    queryKey: ["topHistory"],
+    queryKey: ["topHistory", selectedCountry?.id],
     queryFn: async () => {
       const response = await axios.get(url);
       return response.data.data;
     },
-    enabled: true,
+    enabled: !!selectedCountry || selectedCountry === null,
   });
 
   const baseData = useRef({
