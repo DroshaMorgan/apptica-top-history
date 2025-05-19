@@ -2,11 +2,11 @@ import "chartjs-adapter-date-fns";
 import Chart from "chart.js/auto";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { use, useEffect, useRef } from "react";
+import { use, useEffect, useMemo, useRef } from "react";
 import { CountryContext } from "./CountryContext";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
-// const COUNTRY_ID = 1;
+const COUNTRY_ID_DEFAULT = 1;
 // const DATE_FROM = "2025-05-14";
 // const DATE_TO = "2025-05-15";
 
@@ -16,8 +16,9 @@ export default function TopHistoryChart() {
   const elem = useRef<HTMLCanvasElement>(null);
   const chr = useRef<Chart | null>(null);
   const {selectedCountry} = use(CountryContext);
+  console.log(selectedCountry)
 
-  const url = `https://api.apptica.com/package/top_history/9379/${selectedCountry}?&platforms=1&B4NKGg=${API_KEY}`;
+  const url = useMemo(()=> `https://api.apptica.com/package/top_history/9379/${selectedCountry?.id ?? COUNTRY_ID_DEFAULT}?&platforms=1&B4NKGg=${API_KEY}`,[selectedCountry]) 
   
   const { data } = useQuery({
     queryKey: ["topHistory"],
@@ -25,6 +26,7 @@ export default function TopHistoryChart() {
       const response = await axios.get(url);
       return response.data.data;
     },
+    enabled: true,
   });
 
   const baseData = useRef({

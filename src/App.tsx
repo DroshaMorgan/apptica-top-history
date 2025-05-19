@@ -7,7 +7,6 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-
 function App() {
   const { data } = useQuery({
     queryKey: ["countries"],
@@ -20,7 +19,7 @@ function App() {
   });
 
   return (
-    <CountryProvider country={data}>
+    <CountryProvider countries={data}>
       <div className="flex justify-between p-4">
         <h1>Top History Chart</h1>
 
