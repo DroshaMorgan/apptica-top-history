@@ -1,9 +1,9 @@
 import "./index.css";
-import ChartView from "./ChartView";
-import CountrySelector from "./CountrySelector";
-import { CountryProvider } from "./CountryContextWrapper";
+import ChartView from "./chart/ChartView";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { CountryProvider } from "./country/CountryContextWrapper";
+import CountrySelector from "./country/CountrySelector";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 

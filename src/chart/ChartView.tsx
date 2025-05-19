@@ -3,8 +3,8 @@ import Chart from "chart.js/auto";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { memo, use, useEffect, useMemo, useRef } from "react";
-import { CountryContext } from "./CountryContext";
 import ExportChart from "./ExportChart";
+import { CountryContext } from "../country/CountryContext";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID_DEFAULT = 1;
