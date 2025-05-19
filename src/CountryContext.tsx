@@ -1,30 +1,28 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState, type Dispatch, type ReactNode } from "react";
 
 type Country = { id: number; name: string };
 
-type CountryContextType = {
-  country: Country | null;
-  setCountry: (country: Country) => void;
-};
-
-const CountryContext = createContext<CountryContextType | undefined>(undefined);
-
-export const useCountry = () => {
-  const context = useContext(CountryContext);
-  if (!context) {
-    throw new Error("useCountry must be used within a CountryProvider");
-  }
-  return context;
-};
+export const CountryContext = createContext<{
+  countries: Array<Country | null> | null;
+  selectedCountry: Country | null;
+  setSelectedCountry: Dispatch<React.SetStateAction<Country | null>>;
+}>({
+  countries: null,
+  selectedCountry: null,
+  setSelectedCountry: () => void null,
+});
 
 export const CountryProvider = ({
   children,
+  countries,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  countries: Array<Country | null> | null;
 }) => {
-  const [country, setCountry] = useState<Country | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+
   return (
-    <CountryContext.Provider value={{ country, setCountry }}>
+    <CountryContext.Provider value={{ countries, selectedCountry, setSelectedCountry }}>
       {children}
     </CountryContext.Provider>
   );

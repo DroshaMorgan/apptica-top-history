@@ -1,23 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useCountry } from "./CountryContext";
+import { use } from "react";
+import { CountryContext } from "./CountryContext";
 
-const API_KEY = import.meta.env.VITE_API_KEY;
+
 
 export default function CountrySelector() {
-  const { country, setCountry } = useCountry();
+  const {country,selectedCountry,setSelectedCountry} = use(CountryContext);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["countries"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `https://api.apptica.com/v1/geo?B4NKGg=${API_KEY}`
-      );
-      return res.data.data;
-    },
-  });
+  
 
-  if (isLoading) return <p>Loading countries...</p>;
 
   return (
     <select
@@ -29,7 +19,7 @@ export default function CountrySelector() {
       }}
     >
       <option value="">Select country</option>
-      {data.map((c: any) => (
+      {country?.map((c: any) => (
         <option key={c.id} value={c.id}>
           {c.name}
         </option>
