@@ -27,7 +27,7 @@ export default function CountrySelector() {
 
   return (
     <div className="flex gap-2 items-center">
-      <label>Выбрать страну</label>
+      <label>Select country</label>
       <select
         className="p-2 border rounded"
         value={selectedCountry?.id}

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { use, useEffect, useMemo, useRef } from "react";
 import { CountryContext } from "./CountryContext";
+import ExportChart from "./ExportChart";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID_DEFAULT = 1;
@@ -32,7 +33,12 @@ export default function TopHistoryChart() {
   });
 
   const baseData = useRef({
-    datasets: [],
+    datasets: [] as {
+      label: string;
+      data: { x: number; y: number }[];
+      borderWidth: number;
+      tension: number;
+    }[],
   });
 
   useEffect(() => {
@@ -89,7 +95,7 @@ export default function TopHistoryChart() {
       for (const subCategoryId in category) {
         const entries = category[subCategoryId];
 
-        const dataPoints = [];
+        const dataPoints: { x: number; y: number }[] = [];
 
         for (const date in entries) {
           const position = entries[date];
@@ -110,6 +116,8 @@ export default function TopHistoryChart() {
 
   return (
     <div className="h-96">
+      <ExportChart chr={chr} />
+
       <canvas ref={elem} />
     </div>
   );
