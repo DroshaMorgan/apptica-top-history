@@ -1,6 +1,6 @@
 import { createContext, useState, type Dispatch, type ReactNode } from "react";
 
-type Country = { id: number; name: string };
+export type Country = { id: number; name: string };
 
 export const CountryContext = createContext<{
   countries: Array<Country | null> | null;

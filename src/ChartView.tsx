@@ -2,8 +2,8 @@ import "chartjs-adapter-date-fns";
 import Chart from "chart.js/auto";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
-import { useCountry } from "./CountryContext";
+import { use, useEffect, useRef } from "react";
+import { CountryContext } from "./CountryContext";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 // const COUNTRY_ID = 1;
@@ -15,9 +15,9 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 export default function TopHistoryChart() {
   const elem = useRef<HTMLCanvasElement>(null);
   const chr = useRef<Chart | null>(null);
-  const { country } = useCountry();
+  const {selectedCountry} = use(CountryContext);
 
-  const url = `https://api.apptica.com/package/top_history/9379/${country}?&platforms=1&B4NKGg=${API_KEY}`;
+  const url = `https://api.apptica.com/package/top_history/9379/${selectedCountry}?&platforms=1&B4NKGg=${API_KEY}`;
   
   const { data } = useQuery({
     queryKey: ["topHistory"],

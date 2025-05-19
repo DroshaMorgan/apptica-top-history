@@ -1,27 +1,22 @@
 import { use } from "react";
-import { CountryContext } from "./CountryContext";
-
-
+import { CountryContext, type Country } from "./CountryContext";
 
 export default function CountrySelector() {
-  const {country,selectedCountry,setSelectedCountry} = use(CountryContext);
-
-  
-
+  const {countries,selectedCountry,setSelectedCountry} = use(CountryContext);
 
   return (
     <select
       className="p-2 border rounded"
-      value={country?.id || ""}
+      value={selectedCountry?.id}
       onChange={(e) => {
-        const selected = data.find((c: any) => c.id === Number(e.target.value));
-        if (selected) setCountry({ id: selected.id, name: selected.name });
+        const selected = countries?.find((c: Country | null) => c?.id === Number(e.target.value));
+        if (selected) setSelectedCountry({ id: selected.id, name: selected.name });
       }}
     >
       <option value="">Select country</option>
-      {country?.map((c: any) => (
-        <option key={c.id} value={c.id}>
-          {c.name}
+      {countries?.map((c: Country | null) => (
+        <option key={c?.id} value={c?.id}>
+          {c?.name}
         </option>
       ))}
     </select>
