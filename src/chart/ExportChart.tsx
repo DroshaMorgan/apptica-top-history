@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import type { Chart } from "chart.js";
 import { memo, type RefObject } from "react";
 
@@ -36,19 +37,12 @@ const ExportChart = memo<{ chr: RefObject<Chart | null> }>(({ chr }) => {
 
   return (
     <div className="flex gap-2 justify-end">
-      <span>Download:</span>
-      <button
-        onClick={handleDownloadPNG}
-        className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
-      >
+      <Button onClick={handleDownloadPNG} type="primary">
         PNG
-      </button>
-      <button
-        onClick={handleDownloadCSV}
-        className="bg-green-500 text-white px-3 py-1 rounded text-sm"
-      >
+      </Button>
+      <Button onClick={handleDownloadCSV} type="primary">
         CSV
-      </button>
+      </Button>
     </div>
   );
 });
