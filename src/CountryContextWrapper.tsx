@@ -1,15 +1,11 @@
-import { useState, type ReactNode } from "react";
+import { memo, useState, type PropsWithChildren } from "react";
 import { CountryContext } from "./CountryContext";
 
 export type Country = { id: number; name: string };
 
-export const CountryProvider = ({
-  children,
-  countries,
-}: {
-  children: ReactNode;
-  countries: Array<Country> | null;
-}) => {
+export const CountryProvider = memo<
+  PropsWithChildren<{ countries: Array<Country> | null }>
+>(({ children, countries }) => {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
   return (
@@ -19,4 +15,4 @@ export const CountryProvider = ({
       {children}
     </CountryContext.Provider>
   );
-};
+});
