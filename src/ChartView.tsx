@@ -99,6 +99,7 @@ export default function TopHistoryChart() {
 
         for (const date in entries) {
           const position = entries[date];
+
           dataPoints.push({ x: date, y: position });
         }
 
