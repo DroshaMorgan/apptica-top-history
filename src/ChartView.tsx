@@ -6,26 +6,29 @@ import { use, useEffect, useMemo, useRef } from "react";
 import { CountryContext } from "./CountryContext";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
-// const DATE_FROM = "2025-05-14";
-// const DATE_TO = "2025-05-15";
-
-// const url = `https://api.apptica.com/package/top_history/9379/${COUNTRY_ID}?date_from=${DATE_FROM}&date_to=${DATE_TO}&platforms=1&B4NKGg=${API_KEY}`;
+const COUNTRY_ID_DEFAULT = 1;
 
 export default function TopHistoryChart() {
   const elem = useRef<HTMLCanvasElement>(null);
   const chr = useRef<Chart | null>(null);
-  const {selectedCountry} = use(CountryContext);
-  console.log(selectedCountry)
+  const { selectedCountry } = use(CountryContext);
+  console.log(selectedCountry);
 
-  const url = useMemo(()=> `https://api.apptica.com/package/top_history/9379/${selectedCountry?.id}?&platforms=1&B4NKGg=${API_KEY}`,[selectedCountry]) 
-  
+  const url = useMemo(
+    () =>
+      `https://api.apptica.com/package/top_history/9379/${
+        selectedCountry?.id ?? COUNTRY_ID_DEFAULT
+      }?&platforms=1&B4NKGg=${API_KEY}`,
+    [selectedCountry]
+  );
+
   const { data } = useQuery({
-    queryKey: ["topHistory", selectedCountry?.id],
+    queryKey: ["topHistory", selectedCountry?.id ?? COUNTRY_ID_DEFAULT],
     queryFn: async () => {
       const response = await axios.get(url);
       return response.data.data;
     },
-    enabled: !!selectedCountry || selectedCountry === null,
+    enabled: !!selectedCountry,
   });
 
   const baseData = useRef({
@@ -52,7 +55,6 @@ export default function TopHistoryChart() {
         },
         scales: {
           x: {
-            type: "time",
             time: {
               unit: "day",
               tooltipFormat: "yyyy-MM-dd",

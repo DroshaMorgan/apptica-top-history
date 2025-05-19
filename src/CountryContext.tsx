@@ -1,29 +1,12 @@
-import { createContext, useState, type Dispatch, type ReactNode } from "react";
-
-export type Country = { id: number; name: string };
+import { createContext, type Dispatch, type SetStateAction } from "react";
+import type { Country } from "./CountryContextWrapper";
 
 export const CountryContext = createContext<{
-  countries: Array<Country | null> | null;
+  countries: Array<Country> | null;
   selectedCountry: Country | null;
-  setSelectedCountry: Dispatch<React.SetStateAction<Country | null>>;
+  setSelectedCountry: Dispatch<SetStateAction<Country | null>>;
 }>({
   countries: null,
   selectedCountry: null,
   setSelectedCountry: () => void null,
 });
-
-export const CountryProvider = ({
-  children,
-  countries,
-}: {
-  children: ReactNode;
-  countries: Array<Country | null> | null;
-}) => {
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-
-  return (
-    <CountryContext.Provider value={{ countries, selectedCountry, setSelectedCountry }}>
-      {children}
-    </CountryContext.Provider>
-  );
-};

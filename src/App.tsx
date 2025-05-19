@@ -1,7 +1,7 @@
 import "./index.css";
 import ChartView from "./ChartView";
 import CountrySelector from "./CountrySelector";
-import { CountryProvider } from "./CountryContext";
+import { CountryProvider } from "./CountryContextWrapper";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -21,7 +21,7 @@ function App() {
   return (
     <CountryProvider countries={data}>
       <div className="flex justify-between p-4">
-        <h1>Top History Chart</h1>
+        <h1>Top History</h1>
 
         <CountrySelector />
       </div>
