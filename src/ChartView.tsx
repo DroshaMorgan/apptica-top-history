@@ -2,14 +2,14 @@ import "chartjs-adapter-date-fns";
 import Chart from "chart.js/auto";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { use, useEffect, useMemo, useRef } from "react";
+import { memo, use, useEffect, useMemo, useRef } from "react";
 import { CountryContext } from "./CountryContext";
 import ExportChart from "./ExportChart";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID_DEFAULT = 1;
 
-export default function TopHistoryChart() {
+const TopHistoryChart = memo(() => {
   const elem = useRef<HTMLCanvasElement>(null);
   const chr = useRef<Chart | null>(null);
   const { selectedCountry } = use(CountryContext);
@@ -122,4 +122,6 @@ export default function TopHistoryChart() {
       <canvas ref={elem} />
     </div>
   );
-}
+});
+
+export default TopHistoryChart;

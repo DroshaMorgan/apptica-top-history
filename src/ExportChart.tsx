@@ -1,7 +1,7 @@
 import type { Chart } from "chart.js";
-import type { RefObject } from "react";
+import { memo, type RefObject } from "react";
 
-const ExportChart = ({ chr }: { chr: RefObject<Chart | null> }) => {
+const ExportChart = memo<{ chr: RefObject<Chart | null> }>(({ chr }) => {
   const handleDownloadPNG = () => {
     const chart = chr.current;
     if (!chart) return;
@@ -51,6 +51,6 @@ const ExportChart = ({ chr }: { chr: RefObject<Chart | null> }) => {
       </button>
     </div>
   );
-};
+});
 
 export default ExportChart;

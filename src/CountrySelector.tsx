@@ -1,4 +1,4 @@
-import { use, useEffect, type ChangeEvent } from "react";
+import { memo, use, useEffect, type ChangeEvent } from "react";
 import { type Country } from "./CountryContextWrapper";
 import { CountryContext } from "./CountryContext";
 
@@ -7,7 +7,7 @@ const COUNTRY_ID_DEFAULT = 1;
 const findCountryById = (countries: Array<Country> | null, id: number) =>
   countries?.find((country) => country.id === id) ?? null;
 
-export default function CountrySelector() {
+const CountrySelector = memo(() => {
   const { countries, selectedCountry, setSelectedCountry } =
     use(CountryContext);
 
@@ -41,4 +41,6 @@ export default function CountrySelector() {
       </select>
     </div>
   );
-}
+});
+
+export default CountrySelector;
