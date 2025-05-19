@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { memo, use, useEffect, useMemo, useRef } from "react";
 import ExportChart from "./ExportChart";
 import { CountryContext } from "../country/CountryContext";
+import { useCategoryLabels } from "../hook/useCategoryLabels";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID_DEFAULT = 1;
@@ -13,7 +14,8 @@ const TopHistoryChart = memo(() => {
   const elem = useRef<HTMLCanvasElement>(null);
   const chr = useRef<Chart | null>(null);
   const { selectedCountry } = use(CountryContext);
-  console.log(selectedCountry);
+
+  const { getLabel } = useCategoryLabels();
 
   const url = useMemo(
     () =>
@@ -104,7 +106,7 @@ const TopHistoryChart = memo(() => {
         }
 
         chart.data.datasets.push({
-          label: `Category ${categoryId}-${subCategoryId}`,
+          label: getLabel(categoryId, subCategoryId),
           data: dataPoints,
           borderWidth: 1,
           tension: 0.5,
@@ -113,7 +115,7 @@ const TopHistoryChart = memo(() => {
     }
 
     chart.update();
-  }, [data]);
+  }, [data, getLabel]);
 
   return (
     <div className="h-96">
