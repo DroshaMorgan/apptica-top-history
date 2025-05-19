@@ -97,7 +97,7 @@ export default function TopHistoryChart() {
         }
 
         chart.data.datasets.push({
-          label: `Категория ${categoryId}-${subCategoryId}`,
+          label: `Category ${categoryId}-${subCategoryId}`,
           data: dataPoints,
           borderWidth: 1,
           tension: 0.5,

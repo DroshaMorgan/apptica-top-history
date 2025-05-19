@@ -23,6 +23,7 @@ function App() {
       <div className="flex justify-between p-4">
         <h1>Top History</h1>
 
+        <ExportChart />
         <CountrySelector />
       </div>
 
