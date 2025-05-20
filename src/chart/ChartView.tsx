@@ -1,11 +1,12 @@
 import "chartjs-adapter-date-fns";
-import Chart from "chart.js/auto";
+import { memo, useEffect, useMemo, useRef } from "react";
 import axios from "axios";
+import Chart from "chart.js/auto";
 import { useQuery } from "@tanstack/react-query";
-import { memo, use, useEffect, useMemo, useRef } from "react";
-import ExportChart from "./ExportChart";
-import { CountryContext } from "../country/CountryContext";
+import { useSelector } from "react-redux";
 import { useCategoryLabels } from "../hook/useCategoryLabels";
+import ExportChart from "./ExportChart";
+import type { RootState } from "../store";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID_DEFAULT = 1;
@@ -13,8 +14,10 @@ const COUNTRY_ID_DEFAULT = 1;
 const TopHistoryChart = memo(() => {
   const elem = useRef<HTMLCanvasElement>(null);
   const chr = useRef<Chart | null>(null);
-  const { selectedCountry } = use(CountryContext);
 
+  const selectedCountry = useSelector(
+    (state: RootState) => state.country.selectedCountry
+  );
   const { getLabel } = useCategoryLabels();
 
   const url = useMemo(
@@ -97,7 +100,7 @@ const TopHistoryChart = memo(() => {
       for (const subCategoryId in category) {
         const entries = category[subCategoryId];
 
-        const dataPoints: { x: any; y: number }[] = [];
+        const dataPoints = [];
 
         for (const date in entries) {
           const position = entries[date];
