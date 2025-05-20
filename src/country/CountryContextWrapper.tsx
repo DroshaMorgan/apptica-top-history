@@ -11,7 +11,7 @@ export type Country = {
 export const CountryProvider = memo<
   PropsWithChildren<{ countries: Array<Country> | null }>
 >(({ children, countries }) => {
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<number | null>(null);
 
   return (
     <CountryContext.Provider

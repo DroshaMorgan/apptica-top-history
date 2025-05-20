@@ -1,12 +1,8 @@
 import { memo, use, useEffect } from "react";
-import { type Country } from "./CountryContextWrapper";
 import { Select } from "antd";
 import { CountryContext } from "./CountryContext";
 
 const COUNTRY_ID_DEFAULT = 1;
-
-const findCountryById = (countries: Array<Country> | null, id: number) =>
-  countries?.find((country) => country.id === id) ?? null;
 
 const CountrySelector = memo(() => {
   const { countries, selectedCountry, setSelectedCountry } =
@@ -14,22 +10,18 @@ const CountrySelector = memo(() => {
 
   useEffect(() => {
     if (!selectedCountry && countries?.length) {
-      const defaultCountry = findCountryById(countries, COUNTRY_ID_DEFAULT);
-      if (defaultCountry) {
-        setSelectedCountry(defaultCountry);
-      }
+        setSelectedCountry(COUNTRY_ID_DEFAULT);
     }
   }, [selectedCountry, countries, setSelectedCountry]);
 
   const handleChange = (value: number) => {
-    const selected = findCountryById(countries, value);
-    if (selected) setSelectedCountry(selected);
+    setSelectedCountry(value);
   };
 
   return (
     <Select
       style={{ minWidth: 200 }}
-      value={selectedCountry?.id}
+      value={selectedCountry}
       onChange={handleChange}
       options={countries?.map((country) => ({
         value: country.id,
@@ -40,6 +32,7 @@ const CountrySelector = memo(() => {
           </span>
         ),
       }))}
+      defaultValue={COUNTRY_ID_DEFAULT}
     />
   );
 });

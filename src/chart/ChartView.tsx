@@ -20,13 +20,13 @@ const TopHistoryChart = memo(() => {
   const url = useMemo(
     () =>
       `https://api.apptica.com/package/top_history/9379/${
-        selectedCountry?.id ?? COUNTRY_ID_DEFAULT
+        selectedCountry ?? COUNTRY_ID_DEFAULT
       }?&platforms=1&B4NKGg=${API_KEY}`,
     [selectedCountry]
   );
 
   const { data } = useQuery({
-    queryKey: ["topHistory", selectedCountry?.id ?? COUNTRY_ID_DEFAULT],
+    queryKey: ["topHistory", selectedCountry ?? COUNTRY_ID_DEFAULT],
     queryFn: async () => {
       const response = await axios.get(url);
       return response.data.data;

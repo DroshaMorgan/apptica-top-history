@@ -3,8 +3,8 @@ import type { Country } from "./CountryContextWrapper";
 
 export const CountryContext = createContext<{
   countries: Array<Country> | null;
-  selectedCountry: Country | null;
-  setSelectedCountry: Dispatch<SetStateAction<Country | null>>;
+  selectedCountry: number | null;
+  setSelectedCountry: Dispatch<SetStateAction<number | null>>;
 }>({
   countries: null,
   selectedCountry: null,
