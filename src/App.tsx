@@ -3,7 +3,6 @@ import ChartView from "./chart/ChartView";
 import CountrySelector from "./country/CountrySelector";
 
 function App() {
-  
   return (
     <>
       <div className="flex justify-between items-center p-4">

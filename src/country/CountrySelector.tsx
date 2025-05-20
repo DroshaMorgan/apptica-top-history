@@ -1,7 +1,11 @@
 import { memo, useEffect } from "react";
 import { Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { setCountries, setSelectedCountry, type Country } from "../store/countrySlice";
+import {
+  setCountries,
+  setSelectedCountry,
+  type Country,
+} from "../store/countrySlice";
 import type { RootState } from "../store";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -11,10 +15,8 @@ const COUNTRY_ID_DEFAULT = 1;
 
 const CountrySelector = memo(() => {
   const dispatch = useDispatch();
-  
-  const { selectedCountry } = useSelector(
-    (state: RootState) => state.country
-  );
+
+  const { selectedCountry } = useSelector((state: RootState) => state.country);
 
   const { data, isLoading } = useQuery({
     queryKey: ["countries"],
