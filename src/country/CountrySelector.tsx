@@ -1,21 +1,25 @@
-import { memo, use, useEffect } from "react";
+import { memo, useEffect } from "react";
 import { Select } from "antd";
-import { CountryContext } from "./CountryContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedCountry } from "../store/countrySlice";
+import type { RootState } from "../store";
 
 const COUNTRY_ID_DEFAULT = 1;
 
 const CountrySelector = memo(() => {
-  const { countries, selectedCountry, setSelectedCountry } =
-    use(CountryContext);
+  const dispatch = useDispatch();
+  const { countries, selectedCountry } = useSelector(
+    (state: RootState) => state.country
+  );
 
   useEffect(() => {
     if (!selectedCountry && countries?.length) {
-        setSelectedCountry(COUNTRY_ID_DEFAULT);
+      dispatch(setSelectedCountry(COUNTRY_ID_DEFAULT));
     }
-  }, [selectedCountry, countries, setSelectedCountry]);
+  }, [selectedCountry, countries, dispatch]);
 
   const handleChange = (value: number) => {
-    setSelectedCountry(value);
+    dispatch(setSelectedCountry(value));
   };
 
   return (
