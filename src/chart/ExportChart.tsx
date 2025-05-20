@@ -17,11 +17,11 @@ const ExportChart = memo<{ chr: RefObject<Chart | null> }>(({ chr }) => {
     const chart = chr.current;
     if (!chart) return;
 
-    let csv = "label,date,position\n";
+    let csv = "category,date,position\n";
 
     chart.data.datasets.forEach((dataset) => {
-      dataset.data.forEach((point: any) => {
-        csv += `${dataset.label},${point.x},${point.y}\n`;
+      dataset.data.forEach((point) => {
+        csv += `${dataset.label},${point?.x},${point?.y}\n`;
       });
     });
 
