@@ -100,7 +100,7 @@ const TopHistoryChart = memo(() => {
       for (const subCategoryId in category) {
         const entries = category[subCategoryId];
 
-        const dataPoints = [];
+        const dataPoints: { x: any; y: number }[] = [];
 
         for (const date in entries) {
           const position = entries[date];
