@@ -7,6 +7,25 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 type Category = {
   id: number;
   name: string;
+  categories: Category[];
+};
+
+const findCategoryNameById = (
+  categories: Category[],
+  targetId: string
+): string | null => {
+  for (const category of categories) {
+    if (String(category.id) === targetId) {
+      return category.name;
+    }
+
+    if (category.categories?.length) {
+      const found = findCategoryNameById(category.categories, targetId);
+      if (found) return found;
+    }
+  }
+
+  return null;
 };
 
 export function useCategoryLabels() {
@@ -21,11 +40,13 @@ export function useCategoryLabels() {
   });
 
   const getLabel = (categoryId: string, subCategoryId: string) => {
+    if (!data) return null;
+
     const categoryName =
-      data?.find((category) => String(category.id) === categoryId)?.name ??
-      `Category ${categoryId}`;
+      findCategoryNameById(data, categoryId) ?? `Category ${categoryId}`;
     const subCategoryName =
       subCategoryMap[Number(subCategoryId)] ?? `SubCategory ${subCategoryId}`;
+
     return `${categoryName} - ${subCategoryName}`;
   };
 

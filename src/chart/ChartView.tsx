@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useCategoryLabels } from "../hook/useCategoryLabels";
 import ExportChart from "./ExportChart";
 import type { RootState } from "../store";
+import { Spin } from "antd";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID_DEFAULT = 1;
@@ -28,7 +29,7 @@ const TopHistoryChart = memo(() => {
     [selectedCountry]
   );
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["topHistory", selectedCountry ?? COUNTRY_ID_DEFAULT],
     queryFn: async () => {
       const response = await axios.get(url);
@@ -47,7 +48,7 @@ const TopHistoryChart = memo(() => {
   });
 
   useEffect(() => {
-    if (!elem.current) return;
+    if (!elem.current || chr.current) return;
 
     const chart = new Chart(elem.current, {
       type: "line",
@@ -85,6 +86,7 @@ const TopHistoryChart = memo(() => {
 
     return () => {
       chart.destroy();
+      chr.current = null;
     };
   }, []);
 
@@ -121,11 +123,12 @@ const TopHistoryChart = memo(() => {
   }, [data, getLabel]);
 
   return (
-    <div className="h-96">
-      <ExportChart chr={chr} />
-
-      <canvas ref={elem} />
-    </div>
+    <Spin spinning={isLoading}>
+      <div className="h-96">
+        <ExportChart chr={chr} />
+        <canvas ref={elem} />
+      </div>
+    </Spin>
   );
 });
 
