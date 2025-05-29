@@ -37,8 +37,8 @@ const TopHistoryChart = memo(() => {
     queryFn: async () => {
       const response = await axios.get(url, {
         params: {
-          date_from: dayjs(from).format("YYYY-MM-DD"),
-          date_to: dayjs(to).format("YYYY-MM-DD"),
+          date_from: from ? dayjs(from).format("YYYY-MM-DD") : undefined,
+          date_to: to ? dayjs(to).format("YYYY-MM-DD") : undefined,
         },
       });
       return response.data.data;
