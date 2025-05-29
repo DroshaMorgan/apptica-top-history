@@ -8,6 +8,7 @@ import { useCategoryLabels } from "../hook/useCategoryLabels";
 import ExportChart from "./ExportChart";
 import type { RootState } from "../store";
 import { Spin } from "antd";
+import dayjs from "dayjs";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const COUNTRY_ID_DEFAULT = 1;
@@ -32,10 +33,13 @@ const TopHistoryChart = memo(() => {
   );
 
   const { data, isLoading } = useQuery({
-    queryKey: ["topHistory", selectedCountry ?? COUNTRY_ID_DEFAULT],
+    queryKey: ["topHistory", selectedCountry ?? COUNTRY_ID_DEFAULT, from, to],
     queryFn: async () => {
       const response = await axios.get(url, {
-        params: { date_from: from, date_to: to },
+        params: {
+          date_from: from,
+          date_to: to,
+        },
       });
       return response.data.data;
     },
