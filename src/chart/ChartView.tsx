@@ -19,6 +19,8 @@ const TopHistoryChart = memo(() => {
   const selectedCountry = useSelector(
     (state: RootState) => state.country.selectedCountry
   );
+  const { from, to } = useSelector((state: RootState) => state.filter);
+
   const { getLabel } = useCategoryLabels();
 
   const url = useMemo(
@@ -32,7 +34,9 @@ const TopHistoryChart = memo(() => {
   const { data, isLoading } = useQuery({
     queryKey: ["topHistory", selectedCountry ?? COUNTRY_ID_DEFAULT],
     queryFn: async () => {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        params: { date_from: from, date_to: to },
+      });
       return response.data.data;
     },
     enabled: !!selectedCountry,
