@@ -9,8 +9,10 @@ function App() {
       <div className="flex justify-between items-center p-4">
         <h1 className="text-2xl">Top History</h1>
 
-        <CountrySelector />
-        <FilterSelector />
+        <div className="flex gap-4">
+          <CountrySelector />
+          <FilterSelector />
+        </div>
       </div>
 
       <ChartView />
