@@ -9,9 +9,7 @@ import ExportChart from "./ExportChart";
 import type { RootState } from "../store";
 import { Spin } from "antd";
 import dayjs from "dayjs";
-
-const API_KEY = import.meta.env.VITE_API_KEY;
-const COUNTRY_ID_DEFAULT = 1;
+import { API_KEY, COUNTRY_ID_DEFAULT } from "../libs/constants";
 
 const TopHistoryChart = memo(() => {
   const elem = useRef<HTMLCanvasElement>(null);
@@ -69,8 +67,8 @@ const TopHistoryChart = memo(() => {
         },
         plugins: {
           legend: {
-            position: "bottom",
-            align: "start",
+            position: "top",
+            align: "center",
           },
         },
         scales: {

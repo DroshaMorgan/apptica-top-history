@@ -2,20 +2,20 @@ import { memo } from "react";
 import { DatePicker } from "antd";
 import { useDispatch } from "react-redux";
 
-import { setFromDate, setToDate } from "../store/filterSlice";
+import { resetDates, setFromDate, setToDate } from "../store/filterSlice";
+import type { Dayjs } from "dayjs";
 
 const { RangePicker } = DatePicker;
 
 const FilterSelector = memo(() => {
   const dispatch = useDispatch();
 
-  const onChange = (dates: string[] | null) => {
+  const onChange = (dates: Dayjs[]) => {
     if (dates) {
       dispatch(setFromDate(dates[0].toISOString()));
       dispatch(setToDate(dates[1].toISOString()));
     } else {
-      dispatch(setFromDate(null));
-      dispatch(setToDate(null));
+      dispatch(resetDates());
     }
   };
 
